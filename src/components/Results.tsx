@@ -58,22 +58,16 @@ export function Results({
           <span className="pulse-dot" /> SESSION COMPLETE
         </span>
         <h1 ref={heading} tabIndex={-1}>
-          The human
-          <br />
-          has spoken<span className="accent">.</span>
+          Session complete.
         </h1>
-        <p>
-          Ten requests. Ten decisions.
-          <br />
-          Here’s what’s left of production.
-        </p>
+        <p>Ten requests. Here’s how you handled them.</p>
       </div>
       <section className="score-card" aria-label="Final score card">
         <div className="score-card-header">
           <span>
             <Icon name="terminal" /> PERMISSION PANIC
           </span>
-          <span>JUDGMENT REPORT / 001</span>
+          <span>10 REQUESTS</span>
         </div>
         <div className="score-number">
           <strong>{summary.score.toString().padStart(3, "0")}</strong>

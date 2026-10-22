@@ -5,7 +5,7 @@ Validated on **2026-10-22**. This is a working, static MVP, not a concept mockup
 ## Delivered
 
 - Ten playable, typed scenarios with task scope, proposed command, inspection
-  evidence, contextual final decision, simulation logs and explanations.
+  evidence, plain-language inspection findings, contextual decisions and explanations.
 - Approve / Inspect / Deny flow; correct, partial-credit and negative outcomes;
   a pure state reducer guards duplicate and out-of-order actions.
 - Complete ten-round campaigns, results, titles, accuracy, per-round review and
@@ -24,12 +24,12 @@ Validated on **2026-10-22**. This is a working, static MVP, not a concept mockup
 | Check                    | Actual result                                                                                      |
 | ------------------------ | -------------------------------------------------------------------------------------------------- |
 | `npm run build`          | Passed: TypeScript check and Vite production build                                                 |
-| `npm test`               | 9 tests passed                                                                                     |
+| `npm test`               | 10 tests passed                                                                                    |
 | Playwright desktop       | 5 tests passed; main desktop viewport 1440 × 1000                                                  |
 | Playwright mobile        | 5 tests passed; main mobile viewport 390 × 664, Chromium iPhone emulation                          |
 | Compact / tablet layouts | Additional 320 px and 768 px viewports checked, including a complete compact-screen run            |
 | Entire campaign          | Perfect and all-wrong 10-round runs completed on both layouts                                      |
-| PNG export               | Download succeeded; PNG signature and 1200 × 720 dimensions checked                                |
+| PNG export               | Download succeeded; PNG signature, 1200 × 720 dimensions, and encoder-failure recovery checked     |
 | Sharing                  | Copy success and denied-clipboard fallback verified                                                |
 | Interactions             | Inspection, keyboard, help, round review and replay verified                                       |
 | Layout                   | No horizontal overflow at checked request, evidence and results states                             |
@@ -53,13 +53,21 @@ The temporary browser tooling is not a project or runtime dependency.
 
 ## Publication status
 
-- **GitHub repository URL:** not created. The environment has no `gh` executable.
+- **GitHub repository URL:** not created. The connected GitHub account is valid,
+  but the available connector has no repository-creation operation. The requested
+  repository returned 404; CLI and CLI credentials are absent. The project and
+  launch assets are ready to upload once a repository exists.
 - **Public demo URL:** none; no deployment is claimed.
 - A complete local Git repository is included. README contains minimal commands
   to create a new public repository and enable GitHub Actions Pages deployment.
 - Pages builds set the real repository URL from `github.repository`. Until then,
   the game never invents an owner or link.
 - GitHub-hosted CI and Pages workflows are provided but have not run remotely.
+  Pages now gates its upload on browser tests as well as the production build.
+- Promotion: three campaign posters, a transparent key artwork, genuine UI
+  captures, a verified 12-second H.264 MP4 and GIF, and English / Chinese post copy.
+  Campaign art is conceptual; screenshots and the gameplay edit are actual app output.
+- The product and implementation review is documented in [REVIEW.md](REVIEW.md).
 
 ## Known limits
 

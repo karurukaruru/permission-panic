@@ -24,7 +24,7 @@ npm run test:e2e
 ## Add or refine a scenario
 
 Edit `src/data/scenarios.ts`. Each `Scenario` defines a unique ID, task, request,
-command, scope, inspection evidence, final `correct` decision, `reviewRequired`,
+command, scope, plain-language `inspectionSummary`, technical evidence, final `correct` decision, `reviewRequired`,
 risk level, success/failure copy, technical explanation and simulated log lines.
 
 - Provide enough initial context for the intended decision. When it is missing,

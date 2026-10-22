@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import type { Scenario } from "../data/scenarios";
 import type { GameAction, GameState } from "../lib/game";
 import { Icon } from "./Icon";
+
 export function PermissionCard({
   scenario,
   state,
@@ -34,25 +35,15 @@ export function PermissionCard({
       className={`permission-card ${state.phase === "outcome" ? (failed ? "card-failed" : "card-success") : ""}`}
       aria-label="Agent permission request"
     >
-      <div className="window-bar">
-        <div className="window-dots" aria-hidden="true">
-          <i />
-          <i />
-          <i />
-        </div>
-        <span>agent / permission-request</span>
-        <Icon name="lock" size={14} />
-      </div>
       <div className="request-body">
         <div className="request-meta">
           <span className="agent-mark">
-            <Icon name="terminal" size={22} />
+            <Icon name="terminal" size={18} />
           </span>
-          <div>
-            <strong>YOUR CODING AGENT</strong>
-            <span>needs your permission</span>
-          </div>
-          <span className="request-type">{scenario.category}</span>
+          <span>Agent permission request</span>
+          <span className="request-type">
+            {scenario.category.toLowerCase()}
+          </span>
         </div>
         <h2 ref={titleRef} tabIndex={-1}>
           {scenario.title}
@@ -63,22 +54,13 @@ export function PermissionCard({
         </div>
         <p className="request-copy">{scenario.request}</p>
         <div className="command-block">
-          <div className="command-label">
-            <span>
-              <i /> PROPOSED COMMAND
-            </span>
-            <span>SIMULATION</span>
-          </div>
           <pre>
             <code>
               <span className="prompt">$ </span>
               {scenario.command}
             </code>
           </pre>
-          <div className="scope-line">
-            <Icon name="lock" size={12} />
-            <span>{scenario.scope}</span>
-          </div>
+          <div className="scope-line">{scenario.scope}</div>
         </div>
         {state.phase === "request" && state.inspected && (
           <div
@@ -89,27 +71,26 @@ export function PermissionCard({
           >
             <div className="evidence-heading">
               <Icon name="inspect" size={16} />
-              <strong>INSPECTION REPORT</strong>
-              <span>READ BEFORE DECIDING</span>
+              <strong>What you found</strong>
             </div>
-            {scenario.evidence.map((item) => (
-              <div className="evidence-item" key={item.label}>
-                <span className="mono-label">{item.label}</span>
-                <pre>{item.content}</pre>
-              </div>
-            ))}
+            <p className="inspection-summary">{scenario.inspectionSummary}</p>
+            <details className="technical-evidence">
+              <summary>View technical evidence</summary>
+              {scenario.evidence.map((item) => (
+                <div className="evidence-item" key={item.label}>
+                  <span className="mono-label">{item.label}</span>
+                  <pre>{item.content}</pre>
+                </div>
+              ))}
+            </details>
           </div>
         )}
         {state.phase === "request" && (
-          <>
-            <div className="decision-label">
-              {state.inspected
-                ? "You have the context. Make the call."
-                : "The agent is waiting. What’s your call?"}
-            </div>
-            <div
-              className={`decision-buttons ${state.inspected ? "inspected" : ""}`}
-            >
+          <div className="decision-area">
+            <p className="decision-label">
+              {state.inspected ? "Now, make the call." : "Your call?"}
+            </p>
+            <div className="decision-buttons">
               <button
                 className="decision approve"
                 onClick={() => dispatch({ type: "decide", choice: "approve" })}
@@ -136,7 +117,7 @@ export function PermissionCard({
                 <kbd>D</kbd>
               </button>
             </div>
-          </>
+          </div>
         )}
         {state.phase === "running" && (
           <div
@@ -146,23 +127,18 @@ export function PermissionCard({
           >
             <div className="execution-heading">
               <span className="spinner" />
-              {result.choice === "deny"
-                ? "Blocking request…"
-                : "Simulating execution…"}
+              {result.choice === "deny" ? "Request blocked…" : "Simulating…"}
             </div>
             {(result.choice === "deny"
-              ? [
-                  "Permission denied. No operation performed.",
-                  "Checking your decision…",
-                ]
+              ? ["No operation performed.", "Checking your decision…"]
               : scenario.simulation
-            ).map((line, index) => (
+            ).map((line, i) => (
               <div
                 key={line}
                 className="execution-line"
-                style={{ animationDelay: `${index * 160}ms` }}
+                style={{ animationDelay: `${i * 150}ms` }}
               >
-                <span>›</span> {line}
+                › {line}
               </div>
             ))}
           </div>
@@ -173,13 +149,13 @@ export function PermissionCard({
           >
             <div className="outcome-top">
               <span className="outcome-state">
-                <Icon name={failed ? "deny" : "shield"} size={16} />
+                <Icon name={failed ? "deny" : "check"} size={15} />
                 {failed
                   ? catastrophe
                     ? "SIMULATED INCIDENT"
                     : "MISSED OPPORTUNITY"
                   : result.missedReview
-                    ? "RIGHT CALL · SKIPPED REVIEW"
+                    ? "RIGHT CALL · MISSING EVIDENCE"
                     : "GOOD CALL"}
               </span>
               <strong>
@@ -193,14 +169,8 @@ export function PermissionCard({
             <p>{scenario.explanation}</p>
             {result.missedReview && (
               <p className="review-note">
-                You chose correctly, but skipped evidence needed to justify it.
-                Inspect first for full points.
-              </p>
-            )}
-            {result.correct && state.inspected && !scenario.reviewRequired && (
-              <p className="review-note">
-                Safe call. The request already contained enough context: −10 for
-                an unnecessary review.
+                Right answer, incomplete evidence. Inspect first to justify this
+                decision and earn full points.
               </p>
             )}
             <button
@@ -208,22 +178,10 @@ export function PermissionCard({
               onClick={() => dispatch({ type: "next" })}
             >
               {state.index === 9 ? "See my results" : "Next request"}
-              <span>
-                <kbd>↵</kbd>
-                <Icon name="arrow" size={18} />
-              </span>
+              <Icon name="arrow" size={18} />
             </button>
           </div>
         )}
-      </div>
-      <div className="card-bottom">
-        <span className="pulse-dot" />{" "}
-        {state.phase === "request"
-          ? "Awaiting human judgment"
-          : state.phase === "running"
-            ? "All operations are simulated"
-            : "Human judgment recorded"}
-        <span>NO REAL COMMANDS EXECUTED</span>
       </div>
     </section>
   );

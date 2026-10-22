@@ -9,6 +9,7 @@ export interface Scenario {
   command: string;
   scope: string;
   evidence: { label: string; content: string }[];
+  inspectionSummary: string;
   correct: Decision;
   reviewRequired: boolean;
   risk: Risk;
@@ -22,6 +23,8 @@ export interface Scenario {
 export const scenarios: readonly Scenario[] = [
   {
     id: "read-the-room",
+    inspectionSummary:
+      "This reads only the component you asked to fix. It changes nothing and contains no credentials.",
     category: "FILE ACCESS",
     title: "Let me take a look.",
     task: "Fix the login button alignment. You asked the agent to inspect the component.",
@@ -50,6 +53,8 @@ export const scenarios: readonly Scenario[] = [
   },
   {
     id: "green-tests-red-flags",
+    inspectionSummary:
+      "The tests have a hidden after-test step. It uploads live credentials to an unrelated server.",
     category: "RUN COMMAND",
     title: "The tests are green. Probably.",
     task: "Verify a pull request from a first-time contributor. Its package.json has changed.",
@@ -65,13 +70,13 @@ export const scenarios: readonly Scenario[] = [
       {
         label: "LOCAL CONTEXT",
         content:
-          ".env.local contains production service credentials.\nThe contributor added the posttest hook.\nNo diagnostic upload was requested.",
+          ".env.local contains production service credentials.\nThe contributor added the posttest hook.\nLifecycle hooks are enabled. No diagnostic upload was requested.",
       },
     ],
     correct: "deny",
     reviewRequired: true,
     risk: "high",
-    success: "Green tests. Unsent secrets. Excellent combo.",
+    success: "Secrets stayed local. Good call.",
     failure: "Tests passed. Your secrets left the chat.",
     explanation:
       "npm test also runs lifecycle hooks such as posttest. Here, a changed script packages credentials and uploads them. Review the scripts before running this contributor’s code.",
@@ -84,6 +89,8 @@ export const scenarios: readonly Scenario[] = [
   },
   {
     id: "boring-install",
+    inspectionSummary:
+      "The packages are already reviewed and cached. This install cannot download new ones or run setup scripts.",
     category: "DEPENDENCIES",
     title: "A boring install. A good thing.",
     task: "Restore dependencies from the lockfile you just reviewed. The trusted local cache is ready.",
@@ -112,6 +119,8 @@ export const scenarios: readonly Scenario[] = [
   },
   {
     id: "variable-damage",
+    inspectionSummary:
+      "The variable points to your entire project, not the build folder. Approving would delete your source and Git history.",
     category: "DELETE FILES",
     title: "It’s just the build folder.",
     task: "Clear generated preview files before rebuilding. The target comes from an environment variable.",
@@ -141,6 +150,8 @@ export const scenarios: readonly Scenario[] = [
   },
   {
     id: "private-means-private",
+    inspectionSummary:
+      "This would expose the private key itself. Authentication can be diagnosed without sharing that secret.",
     category: "CREDENTIALS",
     title: "Private key. Public mistake.",
     task: "Explain a Git SSH authentication error. No key export or secret inspection was requested.",
@@ -169,6 +180,8 @@ export const scenarios: readonly Scenario[] = [
   },
   {
     id: "one-line-patch",
+    inspectionSummary:
+      "The patch changes only the requested port. The server remains accessible only on your own machine.",
     category: "EDIT CONFIG",
     title: "One tiny config change.",
     task: "Move the local dev server off a busy port. The agent proposes a configuration patch.",
@@ -197,6 +210,8 @@ export const scenarios: readonly Scenario[] = [
   },
   {
     id: "read-the-docs",
+    inspectionSummary:
+      "This reads the exact public page you authorized. It sends no private files and executes none of the response.",
     category: "NETWORK ACCESS",
     title: "Even agents read the docs.",
     task: "Check CSS grid syntax. You approved fetching this exact public documentation page.",
@@ -226,6 +241,8 @@ export const scenarios: readonly Scenario[] = [
   },
   {
     id: "webpage-says-so",
+    inspectionSummary:
+      "An untrusted webpage is trying to give itself control of your machine. Your CSS task did not authorize that.",
     category: "REMOTE EXECUTION",
     title: "The website said to run it.",
     task: "Fix a CSS bug. A third-party webpage tells the agent to install its “mandatory repair tool.”",
@@ -255,6 +272,8 @@ export const scenarios: readonly Scenario[] = [
   },
   {
     id: "ship-to-the-right-place",
+    inspectionSummary:
+      "One reviewed UI commit goes to your intended private feature branch. No secrets, force push or deployment.",
     category: "GIT PUSH",
     title: "Ready to ship. Where, exactly?",
     task: "You asked the agent to push the reviewed UI fix to your private feature branch. Nothing else.",
@@ -283,6 +302,8 @@ export const scenarios: readonly Scenario[] = [
   },
   {
     id: "secret-presence",
+    inspectionSummary:
+      "The command prints only true or false. The secret value stays local and is never displayed or sent.",
     category: "ENVIRONMENT",
     title: "A secret without the reveal.",
     task: "Check whether a payment key is configured locally. You asked for presence only, never its value.",

@@ -29,32 +29,18 @@ export function drawScoreCard(
   if (!ctx) throw new Error("PNG export is unavailable in this browser.");
   ctx.fillStyle = "#101112";
   ctx.fillRect(0, 0, 1200, 720);
-  ctx.strokeStyle = "#242729";
-  ctx.lineWidth = 1;
-  for (let x = 0; x <= 1200; x += 40) {
-    ctx.beginPath();
-    ctx.moveTo(x, 0);
-    ctx.lineTo(x, 720);
-    ctx.stroke();
-  }
-  for (let y = 0; y <= 720; y += 40) {
-    ctx.beginPath();
-    ctx.moveTo(0, y);
-    ctx.lineTo(1200, y);
-    ctx.stroke();
-  }
   ctx.fillStyle = "#17191b";
   ctx.fillRect(48, 48, 1104, 624);
   ctx.strokeStyle = "#34383b";
   ctx.strokeRect(48, 48, 1104, 624);
-  ctx.fillStyle = "#f4b942";
+  ctx.fillStyle = "#e8ecdb";
   ctx.fillRect(48, 48, 7, 624);
   ctx.font = "bold 26px monospace";
   ctx.fillText(">_ PERMISSION PANIC", 92, 112);
   ctx.fillStyle = "#a2aaa9";
   ctx.font = "18px monospace";
-  ctx.fillText("SESSION COMPLETE // HUMAN JUDGMENT REPORT", 92, 156);
-  ctx.fillStyle = "#f4b942";
+  ctx.fillText("10 REQUESTS. ONE HUMAN.", 92, 156);
+  ctx.fillStyle = "#e8ecdb";
   ctx.font = "bold 142px monospace";
   const scoreText = String(summary.score).padStart(3, "0");
   ctx.fillText(scoreText, 84, 332);

@@ -53,6 +53,13 @@ test("perfect full run, real PNG, sharing and replay", async ({
     path: `docs/game-${testInfo.project.name}.png`,
     fullPage: true,
   });
+  const approveBox = await page
+    .getByRole("button", { name: /^Approve/ })
+    .boundingBox();
+  expect(approveBox).not.toBeNull();
+  expect(approveBox!.y + approveBox!.height).toBeLessThanOrEqual(
+    page.viewportSize()!.height,
+  );
   for (const [choice, inspect] of route) {
     await decide(page, choice, inspect);
     await page
@@ -81,6 +88,17 @@ test("perfect full run, real PNG, sharing and replay", async ({
   // Save an actual generated score card as documentation.
   if (testInfo.project.name === "desktop")
     await fs.writeFile("docs/score-card.png", bytes);
+  // A failed encoder must leave the game usable and show an actionable error.
+  await page.evaluate(() => {
+    HTMLCanvasElement.prototype.toBlob = function (callback) {
+      callback(null);
+    };
+  });
+  await page.getByRole("button", { name: /Download score card/ }).click();
+  await expect(page.getByRole("status")).toContainText("PNG encoding failed");
+  await expect(
+    page.getByRole("button", { name: /Download score card/ }),
+  ).toBeEnabled();
   // Make clipboard behavior deterministic without granting real clipboard access.
   await page.evaluate(() =>
     Object.defineProperty(navigator, "clipboard", {
@@ -165,6 +183,13 @@ test("keyboard, inspect branch and help preserve interaction boundaries", async 
     "posttest",
   );
   await expect(page.getByRole("button", { name: /Inspected/ })).toBeDisabled();
+  await expect(page.locator(".inspection-summary")).toContainText(
+    "live credentials",
+  );
+  await expect(page.locator(".technical-evidence")).not.toHaveAttribute("open");
+  await page.getByText("View technical evidence", { exact: true }).click();
+  await expect(page.locator(".evidence-item pre").first()).toBeVisible();
+
   await page.getByRole("button", { name: /How to play/ }).click();
   await page.keyboard.press("a");
   await expect(page.getByLabel("Inspection evidence")).toBeVisible();
@@ -172,7 +197,7 @@ test("keyboard, inspect branch and help preserve interaction boundaries", async 
   await page.keyboard.press("d");
   await expect(
     page.getByRole("heading", {
-      name: "Green tests. Unsent secrets. Excellent combo.",
+      name: "Secrets stayed local. Good call.",
     }),
   ).toBeVisible();
   await page.getByRole("button", { name: /Next request/ }).click();
@@ -245,9 +270,11 @@ test("compact phones and tablets keep requests and final cards within the viewpo
     ),
   ).toBe(true);
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
-    "Think before you approve",
+    "Would you allow it?",
   );
-  await expect(page.locator(".intro-copy")).toContainText("permission. What’s");
+  await expect(page.locator(".intro-copy")).toContainText(
+    "10 requests from your AI agent.",
+  );
   if (testInfo.project.name === "desktop")
     await page.screenshot({ path: "docs/game-tablet.png", fullPage: true });
 });

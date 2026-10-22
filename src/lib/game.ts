@@ -39,9 +39,7 @@ export function judge(
       : -50
     : missedReview
       ? 60
-      : inspected && !scenario.reviewRequired
-        ? 90
-        : 100;
+      : 100;
   return { id: scenario.id, choice, inspected, correct, points, missedReview };
 }
 export function gameReducer(state: GameState, action: GameAction): GameState {

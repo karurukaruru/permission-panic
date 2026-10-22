@@ -40,7 +40,7 @@ describe("scenario contract", () => {
   });
 });
 describe("judgment and scoring", () => {
-  it("distinguishes necessary review, blind guessing, and unnecessary review", () => {
+  it("distinguishes necessary review, blind guessing, and optional review", () => {
     const nuanced = scenarios[1];
     expect(judge(nuanced, "deny", true)).toMatchObject({
       correct: true,
@@ -51,8 +51,16 @@ describe("judgment and scoring", () => {
       points: 60,
       missedReview: true,
     });
-    expect(judge(scenarios[0], "approve", true).points).toBe(90);
+    expect(judge(scenarios[0], "approve", true).points).toBe(100);
     expect(judge(scenarios[0], "approve", false).points).toBe(100);
+  });
+  it("never penalizes inspecting before a correct decision", () => {
+    for (const scenario of scenarios) {
+      expect(judge(scenario, scenario.correct, true).points).toBe(100);
+      expect(
+        judge(scenario, scenario.correct, true).points,
+      ).toBeGreaterThanOrEqual(judge(scenario, scenario.correct, false).points);
+    }
   });
   it("penalizes a dangerous approval more than a false alarm", () => {
     expect(judge(scenarios[1], "approve", true).points).toBe(-100);

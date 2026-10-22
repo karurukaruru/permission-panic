@@ -17,12 +17,14 @@ Requires Node.js **22.12+** (22 or 24 LTS recommended).
 2. Run `npm run dev`.
 3. Open **http://localhost:4173**.
 
+[Watch 12 seconds of actual gameplay](marketing/gameplay.mp4) · [GIF](marketing/gameplay.gif) · [Launch kit](marketing/README.md)
+
 ## The game
 
 You are the human in the loop. An AI coding agent wants to read a file, run a
 test, clear a build directory, push a commit… you know the routine.
 
-Choose **Approve**, **Inspect**, or **Deny**. Inspect reveals the actual context;
+Choose **Approve**, **Inspect**, or **Deny**. The interface is one focused permission card; no dashboard to navigate. Inspect reveals the actual context;
 you then make the final call. Sometimes a test is just a test. Sometimes its
 post-test hook has other plans for your credentials.
 
@@ -53,19 +55,20 @@ This project is independent and is not affiliated with or endorsed by them.
 
 ## Scoring
 
-| Outcome                                     | Points |
-| ------------------------------------------- | -----: |
-| Correct, with required review completed     |   +100 |
-| Correct, but required evidence was skipped  |    +60 |
-| Correct, with an unnecessary inspection     |    +90 |
-| Incorrect decision                          |    −50 |
-| Approving a high-risk operation incorrectly |   −100 |
+| Outcome                                                           | Points |
+| ----------------------------------------------------------------- | -----: |
+| Correct, with required review completed (optional review is free) |   +100 |
+| Correct, but required evidence was skipped                        |    +60 |
+| Incorrect decision                                                |    −50 |
+| Approving a high-risk operation incorrectly                       |   −100 |
 
 Maximum: **1000**. The final total is clamped at zero. Accuracy measures the final
 Approve/Deny decisions; scoring also rewards a sound review process. Inspect
 never consumes a round. There is no timer: reading is part of the game.
 
 ## Screenshots from the actual app
+
+![The simplified permission request UI](docs/game-desktop.png)
 
 | A very unfortunate test run                                 | A completed session                         |
 | ----------------------------------------------------------- | ------------------------------------------- |
@@ -129,7 +132,7 @@ welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) for the schema and checks.
 
 Security reports: [SECURITY.md](SECURITY.md). Licensed under [MIT](LICENSE).
 
-[Delivery and executed validation](docs/VALIDATION.md).
+[Delivery and executed validation](docs/VALIDATION.md) · [Product review](docs/REVIEW.md).
 
 ## Copy-ready launch post
 

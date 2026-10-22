@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Permission Panic campaign</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: #f1f0ec;
+        color: #202322;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      section {
+        display: none;
+        position: relative;
+        overflow: hidden;
+      }
+      body[data-asset="launch"] #launch,
+      body[data-asset="twist"] #twist,
+      body[data-asset="square"] #square {
+        display: block;
+      }
+      .brand {
+        position: absolute;
+        left: 64px;
+        top: 48px;
+        font-size: 18px;
+        font-weight: 600;
+        letter-spacing: -0.4px;
+      }
+      .brand .dot {
+        color: #c47c66;
+      }
+      .footer {
+        position: absolute;
+        left: 64px;
+        bottom: 44px;
+        font-size: 13px;
+        letter-spacing: 0.1px;
+        color: #6e736f;
+      }
+      .key {
+        position: absolute;
+        width: 660px;
+        height: auto;
+        pointer-events: none;
+      }
+      .copy {
+        position: absolute;
+        left: 64px;
+      }
+      h1,
+      p {
+        margin: 0;
+      }
+      h1 {
+        font-size: 65px;
+        line-height: 1.02;
+        letter-spacing: -3.5px;
+        font-weight: 500;
+      }
+      .copy p {
+        font-size: 17px;
+        line-height: 1.65;
+        color: #696f69;
+        margin-top: 28px;
+      }
+      #launch {
+        width: 1200px;
+        height: 630px;
+        background: #f1f0ec;
+      }
+      #launch .copy {
+        top: 207px;
+        width: 540px;
+      }
+      #launch .key {
+        left: 540px;
+        top: 120px;
+      }
+      #launch .note {
+        position: absolute;
+        right: 53px;
+        top: 53px;
+        color: #858c84;
+        font-size: 11px;
+        letter-spacing: 0.3px;
+      }
+      #twist {
+        width: 1280px;
+        height: 720px;
+        background: #181b1d;
+        color: #eff0ea;
+      }
+      #twist .copy {
+        top: 231px;
+        width: 520px;
+      }
+      #twist h1 {
+        font-size: 84px;
+        line-height: 1;
+        letter-spacing: -5px;
+      }
+      #twist .copy p {
+        color: #b0b8b8;
+        font-size: 20px;
+        margin-top: 30px;
+        line-height: 1.5;
+      }
+      #twist .key {
+        left: 590px;
+        top: 170px;
+        width: 700px;
+      }
+      #twist .footer {
+        color: #8c999b;
+        font-size: 12px;
+      }
+      #twist .brand {
+        color: #eff0ea;
+      }
+      #twist .brand .dot {
+        color: #e6a691;
+      }
+      #square {
+        width: 1080px;
+        height: 1080px;
+        background: #f1f0ec;
+      }
+      #square .brand {
+        left: 70px;
+        top: 61px;
+        font-size: 22px;
+      }
+      #square .copy {
+        top: 182px;
+        left: 70px;
+        width: 940px;
+        text-align: center;
+      }
+      #square h1 {
+        font-size: 78px;
+        letter-spacing: -4px;
+        line-height: 1.04;
+      }
+      #square .copy p {
+        font-size: 20px;
+        margin-top: 22px;
+      }
+      #square .key {
+        left: 90px;
+        top: 416px;
+        width: 900px;
+      }
+      #square .footer {
+        left: 70px;
+        bottom: 57px;
+        font-size: 16px;
+      }
+      .serial {
+        position: absolute;
+        right: 64px;
+        bottom: 44px;
+        font:
+          10px Consolas,
+          monospace;
+        letter-spacing: 1.5px;
+        color: #8b938a;
+      }
+    </style>
+  </head>
+  <body>
+    <section id="launch">
+      <div class="brand">Permission Panic<span class="dot">.</span></div>
+      <div class="note">AN OPEN-SOURCE GAME</div>
+      <div class="copy">
+        <h1>Your agent asks.<br />You decide.</h1>
+        <p>10 requests.<br />Approve, inspect, or deny.</p>
+      </div>
+      <img
+        class="key"
+        src="permission-key.png"
+        alt="Sculptural Allow key, campaign concept artwork"
+      />
+      <div class="footer">A little trust. A lot at stake.</div>
+    </section>
+    <section id="twist">
+      <div class="brand">Permission Panic<span class="dot">.</span></div>
+      <div class="copy">
+        <h1>I clicked<br />Allow.</h1>
+        <p>The tests passed.<br />My secrets left the chat.</p>
+      </div>
+      <img
+        class="key"
+        src="permission-key.png"
+        alt="A premium floating Allow key with a subtle coral seam"
+      />
+      <div class="footer">
+        An in-game consequence. All operations simulated.
+      </div>
+    </section>
+    <section id="square">
+      <div class="brand">Permission Panic<span class="dot">.</span></div>
+      <div class="copy">
+        <h1>Your agent asks.<br />You decide.</h1>
+        <p>10 requests. Approve, inspect, or deny.</p>
+      </div>
+      <img
+        class="key"
+        src="permission-key.png"
+        alt="Allow key editorial artwork"
+      />
+      <div class="footer">A little trust. A lot at stake.</div>
+    </section>
+    <script>
+      document.body.dataset.asset =
+        new URLSearchParams(location.search).get("asset") || "launch";
+    </script>
+  </body>
+</html>
