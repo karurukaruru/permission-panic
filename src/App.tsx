@@ -149,16 +149,14 @@ export default function App() {
               <aside className="game-intro">
                 <span className="eyebrow">A GAME OF QUESTIONABLE TRUST</span>
                 <h1>
-                  Think before
-                  <br />
+                  Think before <br />
                   you{" "}
                   <span className="approve-word">
                     approve<span className="cursor">_</span>
                   </span>
                 </h1>
                 <p className="intro-copy">
-                  Your AI agent wants permission.
-                  <br />
+                  Your AI agent wants permission. <br />
                   What’s the worst that could happen?
                 </p>
                 <div className="challenge-line">

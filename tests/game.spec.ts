@@ -244,6 +244,10 @@ test("compact phones and tablets keep requests and final cards within the viewpo
       () => document.documentElement.scrollWidth <= innerWidth,
     ),
   ).toBe(true);
+  await expect(page.getByRole("heading", { level: 1 })).toContainText(
+    "Think before you approve",
+  );
+  await expect(page.locator(".intro-copy")).toContainText("permission. What’s");
   if (testInfo.project.name === "desktop")
     await page.screenshot({ path: "docs/game-tablet.png", fullPage: true });
 });
