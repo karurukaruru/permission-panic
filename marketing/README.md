@@ -42,5 +42,9 @@ The transparent key artwork is `permission-key.png`, made with the built-in
 image-generation tool. It uses local images and fonts already
 available on the rendering machine. No external image or font requests are needed.
 
-Add the verified public repository or demo URL to the post drafts before posting.
+Verified playable site: https://karurukaruru.github.io/permission-panic/
+
+Repository: https://github.com/karurukaruru/permission-panic
+
+The post drafts include these real links.
 These are prepared promotional materials; no social posts have been sent.

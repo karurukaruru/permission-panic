@@ -76,6 +76,31 @@ the test file. Re-running in the normal local environment passed. Initial
 dependency/GitHub network failures were resolved using the existing system proxy;
 no login or credential replacement was needed.
 
+## Live publication — 2026-10-22
+
+- Public repository: https://github.com/karurukaruru/permission-panic (`main`).
+- Verified live game: https://karurukaruru.github.io/permission-panic/ — URL read
+  from GitHub Pages API, then verified through HTTP and browser automation.
+- Initial published runtime commit: `f2920f8f4320d6ef11a4cd42a09c5eda74cb009d`.
+- [Initial CI](https://github.com/karurukaruru/permission-panic/actions/runs/39753634268): success.
+- [Initial Pages build and deploy](https://github.com/karurukaruru/permission-panic/actions/runs/39753634408): success.
+- Public HTML, JS, CSS and `social-preview.png` each returned HTTP 200.
+- The same 10 browser journeys were run directly against the public Pages URL:
+  10 passed in 30 seconds with installed Chrome, desktop and mobile emulation.
+  This includes perfect and all-wrong campaigns, inspection, incident, help and
+  keyboard interaction, PNG download/dimensions, clipboard fallback and replay.
+- Screenshots now reflect the actual public site; the score export includes the
+  correct GitHub repository link. No browser errors or unexpected app requests
+  occurred in the complete successful runs.
+- README and launch drafts contain the actual playable URL. X and Threads copy,
+  a Chinese launch plan, posters and a genuine gameplay edit are ready.
+- No social posts have been sent. Real-device Safari and Firefox remain untested.
+
+The subsequent publication-documentation commit triggers CI and Pages again;
+their final run IDs and exact final commit are recorded in the delivered
+`PUBLISH_REPORT.md`. The game source and runtime assets are unchanged by that
+documentation update.
+
 ## Publication status at handoff (historical)
 
 - **GitHub repository URL:** not created. The connected GitHub account is valid,

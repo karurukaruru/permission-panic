@@ -6,8 +6,12 @@ Can you survive 10 permission requests from your AI coding agent?
 
 ![A real Permission Panic game session](docs/game-desktop.png)
 
-**Live demo:** not deployed yet. This repository includes a GitHub Pages workflow;
-no unverified demo URL is advertised.
+**[Play Permission Panic →](https://karurukaruru.github.io/permission-panic/)**
+
+Free, open source, no login. Verified on desktop and mobile-size Chrome.
+
+[![Build and test](https://github.com/karurukaruru/permission-panic/actions/workflows/ci.yml/badge.svg)](https://github.com/karurukaruru/permission-panic/actions/workflows/ci.yml)
+[![Deploy to GitHub Pages](https://github.com/karurukaruru/permission-panic/actions/workflows/pages.yml/badge.svg)](https://github.com/karurukaruru/permission-panic/actions/workflows/pages.yml)
 
 ## Play locally in 3 steps
 
@@ -141,4 +145,6 @@ Security reports: [SECURITY.md](SECURITY.md). Licensed under [MIT](LICENSE).
 > Even “npm test” can have a plot twist.
 > Free, open source. No API. No login. Only simulated regret.
 
-Append your verified live demo or GitHub repository URL before posting.
+Play: https://karurukaruru.github.io/permission-panic/
+
+[X / Threads / Reddit / Bilibili copy](marketing/launch-copy.md) · [发布建议（中文）](marketing/LAUNCH_PLAN.zh-CN.md)

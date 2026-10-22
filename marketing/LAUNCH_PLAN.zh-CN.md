@@ -1,5 +1,9 @@
 # Permission Panic 发布安排
 
+试玩：https://karurukaruru.github.io/permission-panic/
+
+源码：https://github.com/karurukaruru/permission-panic
+
 ## 我的建议
 
 先发 X 英文实机视频，同日再发 Threads（脆）繁体中文版本。

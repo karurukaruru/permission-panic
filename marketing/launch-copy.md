@@ -2,7 +2,9 @@
 
 Repository: https://github.com/karurukaruru/permission-panic
 
-The playable URL and verification status are recorded below after deployment.
+Play: https://karurukaruru.github.io/permission-panic/
+
+Verified on 2026-10-22: public HTTP, desktop/mobile browser journeys, and PNG download.
 
 ## X — primary post
 
@@ -13,6 +15,8 @@ In Permission Panic, that disaster is simulated.
 10 requests. Approve, Inspect, or Deny.
 Can you get 1000/1000?
 
+https://karurukaruru.github.io/permission-panic/
+
 ## X — short video post
 
 It was just npm test.
@@ -20,6 +24,8 @@ It was just npm test.
 The tests passed. My secrets left the chat.
 
 A simulated bad decision in Permission Panic — 10 AI-agent permission requests. How many would you get right?
+
+https://karurukaruru.github.io/permission-panic/
 
 ## Reddit
 
@@ -41,6 +47,9 @@ I'd especially like feedback on which requests feel realistic and which decision
 are ambiguous. A correct call should be explainable, not a trick based on missing
 information.
 
+Play: https://karurukaruru.github.io/permission-panic/
+Source: https://github.com/karurukaruru/permission-panic
+
 ## Threads / 脆 — 繁體中文
 
 AI 問：「可以跑一下 npm test 嗎？」
@@ -51,6 +60,8 @@ AI 問：「可以跑一下 npm test 嗎？」
 免費、開源、不用登入，所有事故都是模擬。
 
 你能拿幾分？玩完貼成績卡，我想看看大家栽在哪一關。
+
+https://karurukaruru.github.io/permission-panic/
 
 附件：gameplay.mp4。這是實際操作剪輯，並非連續通關錄影。
 
@@ -63,6 +74,8 @@ AI 申请跑一下 npm test，我点了允许。
 免费开源，无需登录，事故全是模拟。
 
 你能拿多少分？
+
+https://karurukaruru.github.io/permission-panic/
 
 ## Bilibili
 
@@ -77,6 +90,9 @@ AI 申请跑一下 npm test，我点了允许。
 
 不需要 API、不需要登录，所有危险行为都只是模拟。
 视频是实际游戏画面的剪辑，最后 800 分、90% 正确率也是这次操作的真实结算。
+
+试玩：https://karurukaruru.github.io/permission-panic/
+源码：https://github.com/karurukaruru/permission-panic
 
 ## 12-second clip caption plan
 
