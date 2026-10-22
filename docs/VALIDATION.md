@@ -19,7 +19,7 @@ Validated on **2026-10-22**. This is a working, static MVP, not a concept mockup
 - React and React DOM are the only runtime packages. No AI API, account, backend,
   database, analytics, remote font or scenario-command execution.
 
-## Executed checks
+## Handoff environment checks (historical)
 
 | Check                    | Actual result                                                                                      |
 | ------------------------ | -------------------------------------------------------------------------------------------------- |
@@ -51,7 +51,32 @@ separate network environment. It does not mock React, game logic or Canvas.
 Normal development and CI use `npm run test:e2e`, which starts Vite automatically.
 The temporary browser tooling is not a project or runtime dependency.
 
-## Publication status
+## Windows verification — 2026-10-22
+
+Re-executed in the receiving Windows environment with Node 24.19.0 and npm
+11.17.0. These results are separate from the historical checks above.
+
+- Installed the existing lockfile with `npm ci --ignore-scripts` using the
+  official npm registry; audit reported zero vulnerabilities.
+- `npm test`: 10 passed.
+- `npm run build`: TypeScript and Vite production build passed with the actual
+  `VITE_GITHUB_URL=https://github.com/karurukaruru/permission-panic`.
+- `npm run test:e2e -- --workers=2`: 10 passed using installed Google Chrome;
+  five desktop and five mobile-emulation tests against a real local HTTP server.
+- Checked complete perfect/all-wrong runs, inspection, keyboard/help boundaries,
+  compact and tablet widths, PNG signature/dimensions and encoder failure,
+  clipboard success/failure, replay, overflow and unexpected runtime requests.
+- Refreshed documentation screenshots from these actual browser runs.
+- Added the existing campaign image to public assets and Open Graph / X cards.
+- Browser tests now support a deployed project subpath through
+  `PLAYWRIGHT_BASE_URL`; online verification is recorded after deployment.
+
+The initial sandboxed unit-test attempt failed with Windows `EPERM` resolving
+the test file. Re-running in the normal local environment passed. Initial
+dependency/GitHub network failures were resolved using the existing system proxy;
+no login or credential replacement was needed.
+
+## Publication status at handoff (historical)
 
 - **GitHub repository URL:** not created. The connected GitHub account is valid,
   but the available connector has no repository-creation operation. The requested

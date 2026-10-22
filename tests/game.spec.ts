@@ -38,6 +38,8 @@ test("perfect full run, real PNG, sharing and replay", async ({
   page.on("pageerror", (error) => errors.push(error.message));
   page.on("request", (request) => {
     if (
+      new URL(request.url()).origin !==
+        new URL(process.env.PLAYWRIGHT_BASE_URL || "http://127.0.0.1:4173").origin &&
       !new URL(request.url()).hostname.match(
         /^(127\.0\.0\.1|localhost|terminal\.local)$/,
       )
@@ -45,7 +47,7 @@ test("perfect full run, real PNG, sharing and replay", async ({
       external.push(request.url());
   });
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/");
+  await page.goto("./");
   await expect(
     page.getByRole("heading", { name: "Let me take a look." }),
   ).toBeVisible();
@@ -147,7 +149,7 @@ test("perfect full run, real PNG, sharing and replay", async ({
 test("hidden test hook creates a dramatic simulated breach", async ({
   page,
 }, testInfo) => {
-  await page.goto("/");
+  await page.goto("./");
   await decide(page, "approve");
   await page.getByRole("button", { name: /Next request/ }).click();
   await decide(page, "approve");
@@ -169,7 +171,7 @@ test("keyboard, inspect branch and help preserve interaction boundaries", async 
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/");
+  await page.goto("./");
   await page.keyboard.press("a");
   await expect(
     page.getByRole("button", { name: /Next request/ }),
@@ -214,7 +216,7 @@ test("all-wrong run still reaches results with a zero score", async ({
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/");
+  await page.goto("./");
   for (const [correct] of route) {
     await decide(page, correct === "approve" ? "deny" : "approve");
     await page
@@ -234,7 +236,7 @@ test("compact phones and tablets keep requests and final cards within the viewpo
 }, testInfo) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.setViewportSize({ width: 320, height: 740 });
-  await page.goto("/");
+  await page.goto("./");
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= innerWidth,

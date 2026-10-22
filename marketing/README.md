@@ -16,7 +16,8 @@ guarantees or endorsements are claimed.
 | `incident-card.png`  | Actual card screenshot         | Simulated credential incident                    |
 | `inspect-card.png`   | Actual card screenshot         | Plain-language inspection branch                 |
 | `actual-results.png` | Actual card screenshot         | The recorded run: 800/1000, 90% accuracy         |
-| `launch-copy.md`     | English and Chinese text       | X / Reddit / Bilibili drafts                     |
+| `launch-copy.md`     | English and Chinese text       | X / Threads / Reddit / Bilibili drafts           |
+| `LAUNCH_PLAN.zh-CN.md` | Chinese publishing plan      | Suggested order, assets and feedback prompts     |
 
 The clip approves round 1, incorrectly approves round 2, then cuts to the actual
 result after completing the remaining eight rounds correctly. It is edited real

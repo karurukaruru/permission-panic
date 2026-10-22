@@ -1,17 +1,17 @@
 # Launch copy
 
-Append the verified repository / demo link when publishing. No URL or popularity
-claim has been invented.
+Repository: https://github.com/karurukaruru/permission-panic
+
+The playable URL and verification status are recorded below after deployment.
 
 ## X — primary post
 
-Your AI coding agent wants permission.
-You have three buttons: Approve, Inspect, Deny.
+I let my AI agent run npm test.
+The tests passed. My secrets left the chat.
 
-I built Permission Panic: 10 requests, a few hidden traps, and a score card that judges you.
-
-Even “npm test” can have a plot twist.
-Free. Open source. No API. All simulated.
+In Permission Panic, that disaster is simulated.
+10 requests. Approve, Inspect, or Deny.
+Can you get 1000/1000?
 
 ## X — short video post
 
@@ -40,6 +40,29 @@ The scenarios are in a typed data file if you want to improve a question or fork
 I'd especially like feedback on which requests feel realistic and which decisions
 are ambiguous. A correct call should be explainable, not a trick based on missing
 information.
+
+## Threads / 脆 — 繁體中文
+
+AI 問：「可以跑一下 npm test 嗎？」
+我按了允許。測試過了，密鑰也跟著走了。
+
+還好，這次只是我做的小遊戲 Permission Panic。
+10 次 AI 權限請求，選允許、檢查或拒絕。
+免費、開源、不用登入，所有事故都是模擬。
+
+你能拿幾分？玩完貼成績卡，我想看看大家栽在哪一關。
+
+附件：gameplay.mp4。這是實際操作剪輯，並非連續通關錄影。
+
+## X — 中文備用稿
+
+AI 申请跑一下 npm test，我点了允许。
+测试过了，密钥也走了。
+
+我把这种瞬间做成了 Permission Panic：10 次权限请求，允许 / 检查 / 拒绝。
+免费开源，无需登录，事故全是模拟。
+
+你能拿多少分？
 
 ## Bilibili
 
