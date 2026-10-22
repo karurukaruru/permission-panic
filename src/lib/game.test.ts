@@ -135,10 +135,12 @@ describe("safe configuration and sharing", () => {
       "https://github.com/example/permission-panic",
     );
   });
-  it("generates platform-specific text with the actual score", () => {
+  it("generates a localized challenge with the actual score and a playable URL", () => {
     const history = scenarios.map((s) => judge(s, s.correct, s.reviewRequired));
-    expect(shareText(history, "X")).toContain("1000/1000");
-    expect(shareText(history, "Reddit")).toContain("100% accuracy");
-    expect(shareText(history, "Bilibili")).toContain("判断正确率 100%");
+    expect(shareText(history, "en")).toContain("1000/1000");
+    expect(shareText(history, "en")).toContain("100% accuracy");
+    expect(shareText(history, "zh-Hans")).toContain("正确率 100%");
+    expect(shareText(history, "ja")).toContain("正答率100%");
+    expect(shareText(history)).toContain("https://karurukaruru.github.io/permission-panic/");
   });
 });

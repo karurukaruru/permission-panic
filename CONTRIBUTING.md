@@ -52,9 +52,18 @@ and export layouts, the score denominator, independent browser fixtures and test
 - `src/components/Results.tsx`: results, review, share and replay.
 - `src/lib/share.ts`: native Canvas PNG export and platform-specific text.
 - `src/lib/config.ts`: optional repository URL validation.
+- `src/locales/`: Simplified Chinese, Traditional Chinese, Korean and Japanese copy.
+- `src/lib/i18n.ts`: locale matching, preference and translation.
+- `scripts/build-offline.mjs`: portable single-file build.
 - `tests/game.spec.ts`: browser journeys with independent answer fixtures.
 
 Use native CSS and browser APIs. Keep runtime dependencies limited to React and
 React DOM unless there is a clear reason to change that. Honor reduced motion,
 keyboard use, focus states and mobile layouts. Include real screenshots for UI
 changes. Keep pull requests focused; explain the behavior and how you tested it.
+
+When changing a scenario, update its seven narrative fields in every translation
+resource. Preserve the exact commands, raw evidence, answers and review rules.
+Technical evidence and logs intentionally keep their original form. Translation
+corrections are welcome; translations have not had independent native-speaker review.
+Validate new copy at mobile widths and in the downloaded offline HTML as well.

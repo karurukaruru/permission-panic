@@ -1,32 +1,33 @@
 import { GITHUB_URL } from "./config";
 import { summarize, type RoundResult } from "./game";
-export type ShareTarget = "X" | "Reddit" | "Bilibili";
+import { translate, type Locale } from "./i18n";
 export function shareText(
   history: readonly RoundResult[],
-  target: ShareTarget,
+  locale: Locale = "en",
 ): string {
   const { score, accuracy, rank } = summarize(history);
-  const link = GITHUB_URL ? `\n${GITHUB_URL}` : "";
-  if (target === "Bilibili")
-    return `我的 AI 编程助手申请了 10 次权限。结果：${score}/1000 分，判断正确率 ${accuracy}%，称号 ${rank}。\nPermission Panic：你敢一直点“允许”吗？纯模拟，无需 API 或登录。${link}`;
-  if (target === "Reddit")
-    return `I scored ${score}/1000 (${accuracy}% accuracy) in Permission Panic — ${rank}.\nIt's a free, open-source game about 10 AI coding agent permission requests. Even “npm test” can have a plot twist. No API, no login, all simulation. How would you do?${link}`;
-  return `My AI agent asked for permission 10 times. I scored ${score}/1000 — ${rank}.\nCan you survive Permission Panic? Your production is (probably) safe.\n#PermissionPanic #OpenSource${link}`;
+  const link = typeof location !== "undefined" && location.protocol === "https:"
+    ? location.href.split(/[?#]/)[0]
+    : "https://karurukaruru.github.io/permission-panic/";
+  return translate(locale, "I scored {score}/1000 ({accuracy}% accuracy) in Permission Panic — {rank}. Can you survive 10 AI-agent permission requests? No login. All simulated.",
+    { score, accuracy, rank: translate(locale, rank) }) + `\n${link}`;
 }
-export async function copyText(text: string): Promise<void> {
+export async function copyText(text: string, locale: Locale = "en"): Promise<void> {
   if (!navigator.clipboard?.writeText)
-    throw new Error("Clipboard unavailable. Select and copy the text below.");
+    throw new Error(translate(locale, "Clipboard unavailable. Select and copy the text below."));
   await navigator.clipboard.writeText(text);
 }
 export function drawScoreCard(
   history: readonly RoundResult[],
+  locale: Locale = "en",
 ): HTMLCanvasElement {
   const summary = summarize(history);
   const canvas = document.createElement("canvas");
   canvas.width = 1200;
   canvas.height = 720;
   const ctx = canvas.getContext("2d");
-  if (!ctx) throw new Error("PNG export is unavailable in this browser.");
+  const t = (message: string) => translate(locale, message);
+  if (!ctx) throw new Error(t("PNG export is unavailable in this browser."));
   ctx.fillStyle = "#101112";
   ctx.fillRect(0, 0, 1200, 720);
   ctx.fillStyle = "#17191b";
@@ -39,7 +40,7 @@ export function drawScoreCard(
   ctx.fillText(">_ PERMISSION PANIC", 92, 112);
   ctx.fillStyle = "#a2aaa9";
   ctx.font = "18px monospace";
-  ctx.fillText("10 REQUESTS. ONE HUMAN.", 92, 156);
+  ctx.fillText(t("10 REQUESTS. ONE HUMAN."), 92, 156, 1016);
   ctx.fillStyle = "#e8ecdb";
   ctx.font = "bold 142px monospace";
   const scoreText = String(summary.score).padStart(3, "0");
@@ -50,16 +51,16 @@ export function drawScoreCard(
   ctx.fillText("/ 1000", 105 + scoreWidth, 328);
   ctx.fillStyle = "#f0f1ec";
   ctx.font = "bold 38px sans-serif";
-  ctx.fillText(summary.rank, 92, 409);
+  ctx.fillText(t(summary.rank), 92, 409, 1016);
   ctx.fillStyle = "#a2aaa9";
   ctx.font = "23px sans-serif";
-  ctx.fillText(summary.quip, 92, 456);
+  ctx.fillText(t(summary.quip), 92, 456, 1016);
   ctx.fillStyle = "#79dfba";
   ctx.font = "bold 44px monospace";
   ctx.fillText(`${summary.accuracy}%`, 852, 285);
   ctx.fillStyle = "#a2aaa9";
   ctx.font = "18px monospace";
-  ctx.fillText("ACCURACY", 852, 322);
+  ctx.fillText(t("ACCURACY"), 852, 322, 240);
   for (let i = 0; i < 10; i++) {
     ctx.fillStyle = history[i]?.correct ? "#79dfba" : "#ef767a";
     ctx.fillRect(92 + i * 100, 505, 84, 8);
@@ -71,11 +72,11 @@ export function drawScoreCard(
   ctx.stroke();
   ctx.fillStyle = "#cbd0ce";
   ctx.font = "18px monospace";
-  ctx.fillText("10 REQUESTS. WHAT COULD POSSIBLY GO WRONG?", 92, 599);
+  ctx.fillText(t("10 REQUESTS. WHAT COULD POSSIBLY GO WRONG?"), 92, 599, 1016);
   ctx.fillStyle = "#a2aaa9";
   ctx.font = "17px monospace";
   ctx.fillText(
-    GITHUB_URL || "Open source · MIT · GitHub link pending",
+    GITHUB_URL || t("Open source · MIT"),
     92,
     635,
   );
@@ -83,14 +84,15 @@ export function drawScoreCard(
 }
 export async function downloadScoreCard(
   history: readonly RoundResult[],
+  locale: Locale = "en",
 ): Promise<void> {
-  const canvas = drawScoreCard(history);
+  const canvas = drawScoreCard(history, locale);
   const blob = await new Promise<Blob>((resolve, reject) =>
     canvas.toBlob(
       (value) =>
         value
           ? resolve(value)
-          : reject(new Error("PNG encoding failed. Please try again.")),
+          : reject(new Error(translate(locale, "PNG encoding failed. Please try again."))),
       "image/png",
     ),
   );

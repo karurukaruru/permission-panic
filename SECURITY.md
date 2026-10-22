@@ -3,12 +3,12 @@
 Permission Panic is a client-only simulation. Scenario commands are inert text.
 The app must never execute them, fetch their URLs, read local files, or request
 credentials. No AI service, analytics, account, or backend is used. Playing
-requires only serving the static assets. Sharing copies text; it does not post
+uses static assets or a downloaded self-contained HTML file. Sharing copies text; it does not post
 anything. Exporting writes an image chosen by the player.
 
 ## Reporting a vulnerability
 
-After a public repository is created, use its **Security → Report a
+Use the repository's **Security → Report a
 vulnerability** feature if private vulnerability reporting is enabled. If it is
 unavailable, ask the repository owner to enable it. Do not publish sensitive
 exploit details or credentials in a public issue. There is no invented security

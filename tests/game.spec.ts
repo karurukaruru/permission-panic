@@ -112,8 +112,8 @@ test("perfect full run, real PNG, sharing and replay", async ({
       },
     }),
   );
-  await page.getByRole("button", { name: "X", exact: true }).click();
-  await expect(page.getByRole("status")).toContainText("X share text copied");
+  await page.getByRole("button", { name: "Copy challenge", exact: true }).click();
+  await expect(page.getByRole("status")).toContainText("Challenge copied");
   expect(
     await page.evaluate(() => (window as unknown as { copied: string }).copied),
   ).toContain("1000/1000");
@@ -127,9 +127,9 @@ test("perfect full run, real PNG, sharing and replay", async ({
       },
     }),
   );
-  await page.getByRole("button", { name: "Bilibili", exact: true }).click();
+  await page.getByRole("button", { name: "Copy challenge", exact: true }).click();
   await expect(page.getByLabel("Share text to copy")).toHaveValue(
-    /判断正确率 100%/,
+    /100% accuracy/,
   );
   await page.getByText("Review your decisions", { exact: false }).click();
   await expect(page.locator(".review-list article")).toHaveCount(10);
@@ -189,7 +189,7 @@ test("keyboard, inspect branch and help preserve interaction boundaries", async 
     "live credentials",
   );
   await expect(page.locator(".technical-evidence")).not.toHaveAttribute("open");
-  await page.getByText("View technical evidence", { exact: true }).click();
+  await page.getByText("View technical evidence (original)", { exact: true }).click();
   await expect(page.locator(".evidence-item pre").first()).toBeVisible();
 
   await page.getByRole("button", { name: /How to play/ }).click();

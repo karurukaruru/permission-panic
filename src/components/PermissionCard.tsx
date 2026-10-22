@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import type { Scenario } from "../data/scenarios";
 import type { GameAction, GameState } from "../lib/game";
 import { Icon } from "./Icon";
+import { useLanguage } from "../lib/i18n";
 
 export function PermissionCard({
   scenario,
@@ -12,6 +13,7 @@ export function PermissionCard({
   state: GameState;
   dispatch: React.Dispatch<GameAction>;
 }) {
+  const { t } = useLanguage();
   const titleRef = useRef<HTMLHeadingElement>(null);
   const evidenceRef = useRef<HTMLDivElement>(null);
   const resultRef = useRef<HTMLHeadingElement>(null);
@@ -33,23 +35,23 @@ export function PermissionCard({
   return (
     <section
       className={`permission-card ${state.phase === "outcome" ? (failed ? "card-failed" : "card-success") : ""}`}
-      aria-label="Agent permission request"
+      aria-label={t("Agent permission request")}
     >
       <div className="request-body">
         <div className="request-meta">
           <span className="agent-mark">
             <Icon name="terminal" size={18} />
           </span>
-          <span>Agent permission request</span>
+          <span>{t("Agent permission request")}</span>
           <span className="request-type">
-            {scenario.category.toLowerCase()}
+            {t(scenario.category.toLowerCase())}
           </span>
         </div>
         <h2 ref={titleRef} tabIndex={-1}>
           {scenario.title}
         </h2>
         <div className="task-context">
-          <span className="mono-label">YOUR TASK</span>
+          <span className="mono-label">{t("YOUR TASK")}</span>
           <p>{scenario.task}</p>
         </div>
         <p className="request-copy">{scenario.request}</p>
@@ -67,15 +69,15 @@ export function PermissionCard({
             className="evidence-panel"
             ref={evidenceRef}
             tabIndex={-1}
-            aria-label="Inspection evidence"
+            aria-label={t("Inspection evidence")}
           >
             <div className="evidence-heading">
               <Icon name="inspect" size={16} />
-              <strong>What you found</strong>
+              <strong>{t("What you found")}</strong>
             </div>
             <p className="inspection-summary">{scenario.inspectionSummary}</p>
             <details className="technical-evidence">
-              <summary>View technical evidence</summary>
+              <summary>{t("View technical evidence (original)")}</summary>
               {scenario.evidence.map((item) => (
                 <div className="evidence-item" key={item.label}>
                   <span className="mono-label">{item.label}</span>
@@ -88,7 +90,7 @@ export function PermissionCard({
         {state.phase === "request" && (
           <div className="decision-area">
             <p className="decision-label">
-              {state.inspected ? "Now, make the call." : "Your call?"}
+              {t(state.inspected ? "Now, make the call." : "Your call?")}
             </p>
             <div className="decision-buttons">
               <button
@@ -96,7 +98,7 @@ export function PermissionCard({
                 onClick={() => dispatch({ type: "decide", choice: "approve" })}
               >
                 <Icon name="check" />
-                <span>Approve</span>
+                <span>{t("Approve")}</span>
                 <kbd>A</kbd>
               </button>
               <button
@@ -105,7 +107,7 @@ export function PermissionCard({
                 onClick={() => dispatch({ type: "inspect" })}
               >
                 <Icon name="inspect" />
-                <span>{state.inspected ? "Inspected" : "Inspect"}</span>
+                <span>{t(state.inspected ? "Inspected" : "Inspect")}</span>
                 <kbd>I</kbd>
               </button>
               <button
@@ -113,7 +115,7 @@ export function PermissionCard({
                 onClick={() => dispatch({ type: "decide", choice: "deny" })}
               >
                 <Icon name="deny" />
-                <span>Deny</span>
+                <span>{t("Deny")}</span>
                 <kbd>D</kbd>
               </button>
             </div>
@@ -123,11 +125,11 @@ export function PermissionCard({
           <div
             className={`execution ${catastrophe ? "execution-danger" : ""}`}
             role="status"
-            aria-label="Simulated execution in progress"
+            aria-label={t("Simulated execution in progress")}
           >
             <div className="execution-heading">
               <span className="spinner" />
-              {result.choice === "deny" ? "Request blocked…" : "Simulating…"}
+              {t(result.choice === "deny" ? "Request blocked…" : "Simulating…")}
             </div>
             {(result.choice === "deny"
               ? ["No operation performed.", "Checking your decision…"]
@@ -138,7 +140,7 @@ export function PermissionCard({
                 className="execution-line"
                 style={{ animationDelay: `${i * 150}ms` }}
               >
-                › {line}
+                › {t(line)}
               </div>
             ))}
           </div>
@@ -150,17 +152,17 @@ export function PermissionCard({
             <div className="outcome-top">
               <span className="outcome-state">
                 <Icon name={failed ? "deny" : "check"} size={15} />
-                {failed
+                {t(failed
                   ? catastrophe
                     ? "SIMULATED INCIDENT"
                     : "MISSED OPPORTUNITY"
                   : result.missedReview
                     ? "RIGHT CALL · MISSING EVIDENCE"
-                    : "GOOD CALL"}
+                    : "GOOD CALL")}
               </span>
               <strong>
                 {result.points > 0 ? "+" : ""}
-                {result.points} pts
+                {result.points} {t("pts")}
               </strong>
             </div>
             <h3 ref={resultRef} tabIndex={-1}>
@@ -169,15 +171,14 @@ export function PermissionCard({
             <p>{scenario.explanation}</p>
             {result.missedReview && (
               <p className="review-note">
-                Right answer, incomplete evidence. Inspect first to justify this
-                decision and earn full points.
+                {t("Right answer, incomplete evidence. Inspect first to justify this decision and earn full points.")}
               </p>
             )}
             <button
               className="next-button"
               onClick={() => dispatch({ type: "next" })}
             >
-              {state.index === 9 ? "See my results" : "Next request"}
+              {t(state.index === 9 ? "See my results" : "Next request")}
               <Icon name="arrow" size={18} />
             </button>
           </div>

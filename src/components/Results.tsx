@@ -1,14 +1,13 @@
 import { useEffect, useRef, useState } from "react";
-import { scenarios } from "../data/scenarios";
 import { summarize, type RoundResult } from "../lib/game";
 import {
   copyText,
   downloadScoreCard,
   shareText,
-  type ShareTarget,
 } from "../lib/share";
 import { GITHUB_URL } from "../lib/config";
 import { Icon } from "./Icon";
+import { useLanguage } from "../lib/i18n";
 export function Results({
   history,
   restart,
@@ -16,6 +15,7 @@ export function Results({
   history: RoundResult[];
   restart: () => void;
 }) {
+  const { locale, t, scenarios } = useLanguage();
   const summary = summarize(history);
   const heading = useRef<HTMLHeadingElement>(null);
   const [notice, setNotice] = useState("");
@@ -28,46 +28,46 @@ export function Results({
     setBusy(true);
     setNotice("");
     try {
-      await downloadScoreCard(history);
-      setNotice("Score card downloaded. The evidence is yours.");
+      await downloadScoreCard(history, locale);
+      setNotice(t("Score card downloaded. The evidence is yours."));
     } catch (error) {
       setNotice(
         error instanceof Error
           ? error.message
-          : "Export failed. Please try again.",
+          : t("Export failed. Please try again."),
       );
     } finally {
       setBusy(false);
     }
   }
-  async function share(target: ShareTarget) {
-    const text = shareText(history, target);
+  async function share() {
+    const text = shareText(history, locale);
     try {
-      await copyText(text);
+      await copyText(text, locale);
       setFallback("");
-      setNotice(`${target} share text copied. Ready when you are.`);
+      setNotice(t("Challenge copied. Ready when you are."));
     } catch {
       setFallback(text);
-      setNotice("Clipboard blocked by your browser. Copy the text below.");
+      setNotice(t("Clipboard blocked by your browser. Copy the text below."));
     }
   }
   return (
     <div className="results-layout">
       <div className="results-intro">
         <span className="eyebrow">
-          <span className="pulse-dot" /> SESSION COMPLETE
+          <span className="pulse-dot" /> {t("SESSION COMPLETE")}
         </span>
         <h1 ref={heading} tabIndex={-1}>
-          Session complete.
+          {t("Session complete.")}
         </h1>
-        <p>Ten requests. Here’s how you handled them.</p>
+        <p>{t("Ten requests. Here’s how you handled them.")}</p>
       </div>
-      <section className="score-card" aria-label="Final score card">
+      <section className="score-card" aria-label={t("Final score card")}>
         <div className="score-card-header">
           <span>
             <Icon name="terminal" /> PERMISSION PANIC
           </span>
-          <span>10 REQUESTS</span>
+          <span>{t("10 REQUESTS")}</span>
         </div>
         <div className="score-number">
           <strong>{summary.score.toString().padStart(3, "0")}</strong>
@@ -75,19 +75,19 @@ export function Results({
           <div className="score-stamp">
             <Icon name="shield" size={32} />
             <span>
-              {summary.accuracy}%<small>ACCURACY</small>
+              {summary.accuracy}%<small>{t("ACCURACY")}</small>
             </span>
           </div>
         </div>
-        <span className="mono-label">YOUR NEW JOB TITLE</span>
-        <h2>{summary.rank}</h2>
-        <p className="quip">{summary.quip}</p>
-        <div className="score-rounds" aria-label="Round outcomes">
+        <span className="mono-label">{t("YOUR NEW JOB TITLE")}</span>
+        <h2>{t(summary.rank)}</h2>
+        <p className="quip">{t(summary.quip)}</p>
+        <div className="score-rounds" aria-label={t("Round outcomes")}>
           {history.map((r, i) => (
             <span
               key={r.id}
               className={r.correct ? "safe" : "breach"}
-              title={`Round ${i + 1}: ${r.correct ? "correct" : "incorrect"}`}
+              title={t("Round {n}: {result}", { n: i + 1, result: t(r.correct ? "correct" : "incorrect") })}
             >
               {r.correct ? (
                 <Icon name="check" size={15} />
@@ -99,32 +99,25 @@ export function Results({
         </div>
         <div className="score-card-footer">
           <span>
-            {summary.correct}/10 correct decisions · {summary.breaches} unsafe
-            approvals
+            {t("{correct}/10 correct decisions · {breaches} unsafe approvals", summary)}
           </span>
           {GITHUB_URL ? (
             <a href={GITHUB_URL} target="_blank" rel="noreferrer">
               GitHub <Icon name="external" size={12} />
             </a>
           ) : (
-            <span>OPEN SOURCE · MIT</span>
+            <span>{t("Open source · MIT")}</span>
           )}
         </div>
       </section>
       <div className="result-actions">
         <button className="primary-button" onClick={download} disabled={busy}>
           <Icon name="download" />
-          {busy ? "Exporting…" : "Download score card"}
+          {t(busy ? "Exporting…" : "Download score card")}
           <span>PNG</span>
         </button>
         <div className="share-row">
-          <span className="mono-label">COPY TO SHARE</span>
-          {(["X", "Reddit", "Bilibili"] as const).map((target) => (
-            <button key={target} onClick={() => share(target)}>
-              <Icon name="copy" size={14} />
-              {target}
-            </button>
-          ))}
+          <button onClick={share}><Icon name="copy" size={14} />{t("Copy challenge")}</button>
         </div>
         <p className="notice" role="status">
           {notice}
@@ -132,17 +125,17 @@ export function Results({
         {fallback && (
           <textarea
             className="share-fallback"
-            aria-label="Share text to copy"
+            aria-label={t("Share text to copy")}
             value={fallback}
             readOnly
             onFocus={(event) => event.target.select()}
           />
         )}
-        <p className="repo-note">Made it through? Challenge another human.</p>
+        <p className="repo-note">{t("Made it through? Challenge another human.")}</p>
       </div>
       <details className="round-review">
         <summary>
-          Review your decisions <span>10 REQUESTS ↓</span>
+          {t("Review your decisions")} <span>{t("10 REQUESTS")} ↓</span>
         </summary>
         <div className="review-list">
           {history.map((r, i) => (
@@ -160,10 +153,10 @@ export function Results({
                 </strong>
               </div>
               <p>
-                You: {r.inspected ? "inspect → " : ""}
-                {r.choice}. Best call:{" "}
-                {scenarios[i].reviewRequired ? "inspect → " : ""}
-                {scenarios[i].correct}.
+                {t("You: {choice}. Best call: {best}.", {
+                  choice: `${r.inspected ? t("Inspect") + " → " : ""}${t(r.choice === "approve" ? "Approve" : "Deny")}`,
+                  best: `${scenarios[i].reviewRequired ? t("Inspect") + " → " : ""}${t(scenarios[i].correct === "approve" ? "Approve" : "Deny")}`,
+                })}
               </p>
               <p>{scenarios[i].explanation}</p>
             </article>
@@ -171,8 +164,8 @@ export function Results({
         </div>
       </details>
       <button className="replay-button" onClick={restart}>
-        <Icon name="reset" size={18} /> Run it back{" "}
-        <span>Same requests. Better judgment.</span>
+        <Icon name="reset" size={18} /> {t("Run it back")}{" "}
+        <span>{t("Same requests. Better judgment.")}</span>
       </button>
     </div>
   );
